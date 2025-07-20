@@ -1,27 +1,28 @@
-import express from 'express';
-import { PrismaClient } from './generated/prisma/index.js';
-
-
-const prisma = new PrismaClient();
-const app = express();
-
-
-app.get('/api/spaces', async (req, res) => {
-  try {
-    const spaces = await prisma.space.findMany({
-      orderBy: { name: 'asc' }
-    });
-
-    return res.json(spaces);
-  } catch (error) {
-    return res.status(500).json({ error: "Error fetching spaces" });
-  } finally {
-    await prisma.$disconnect();
-  }
-});
+import http from "http";
+import app from "./app.js";
+import prisma, { connectDB } from "./utils/prisma.js";
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+const server = http.createServer(app);
+
+// Graceful shutdown logic
+async function handleExit() {
+  await prisma.$disconnect();
+  console.log("🔌 Prisma disconnected");
+  process.exit();
+}
+
+// Register signal handlers
+process.on("SIGINT", handleExit); // CTRL+C
+process.on("SIGTERM", handleExit); // kill command or platform signals
+
+const startServer = async () => {
+  connectDB();
+
+  server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+};
+
+startServer();
