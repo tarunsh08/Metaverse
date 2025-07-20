@@ -1,0 +1,68 @@
+/* General page styling */
+.metaverse-container-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive; /* A pixel-art font, add via Google Fonts if needed */
+    background-color: #f0f8ff;
+    padding: 20px;
+}
+
+h1 {
+    color: #e52521;
+    text-shadow: 2px 2px #000000;
+}
+
+/* The main game world container */
+.game-container {
+    position: relative; /* This is essential for positioning children absolutely */
+    width: 800px;
+    height: 500px;
+    border: 8px solid #8b4513;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden; /* Prevents avatar from going outside the box */
+}
+
+/* The movable Mario avatar */
+.mario-avatar {
+    position: absolute; /* Allows positioning via top/left properties */
+    width: 50px;
+    height: 70px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* A subtle transition for smoother movement */
+    transition: top 0.1s linear, left 0.1s linear;
+}
+
+/* Static scenery elements */
+.pipe {
+    position: absolute;
+    bottom: 0;
+    left: 650px;
+    width: 90px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.block {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+}
+
+/* Text for movement instructions */
+.controls-info {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
